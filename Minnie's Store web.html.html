@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Minnie's Store</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <style>
+        /* Warna biru dan pink manis */
+        :root {
+            --primary-blue: #4a90e2;
+            --secondary-pink: #f78fb3;
+            --light-pink: #ffe6f0;
+            --dark-blue: #1e3a8a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff0f6; /* sedikit pink ringan */
+            color: var(--dark-blue);
+        }
+
+        /* Navbar biru */
+        .navbar {
+            background-color: var(--primary-blue) !important;
+        }
+        .navbar .navbar-brand,
+        .navbar .nav-link {
+            color: white !important;
+            font-weight: 600;
+        }
+        .navbar .nav-link.active {
+            color: var(--secondary-pink) !important;
+            font-weight: 700;
+        }
+        .navbar .btn-outline-dark {
+            border-color: var(--secondary-pink);
+            color: var(--secondary-pink);
+        }
+        .navbar .btn-outline-dark:hover {
+            background-color: var(--secondary-pink);
+            color: white;
+            border-color: var(--secondary-pink);
+        }
+
+        /* Header biru dengan pink */
+        header#home {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-pink));
+            color: white;
+        }
+
+        /* Produk */
+        .card {
+            border-radius: 15px;
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(247, 143, 179, 0.4);
+        }
+        .btn-outline-dark {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        .btn-outline-dark:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        /* Badge cart */
+        .badge.bg-dark {
+            background-color: var(--secondary-pink) !important;
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+
+        /* Section About */
+        #about {
+            background-color: var(--light-pink);
+            color: var(--dark-blue);
+            border-radius: 10px;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #dff4ff; /* soft blue */
+            border-radius: 10px;
+            padding: 40px 20px;
+            color: var(--dark-blue);
+        }
+        #contact h2 {
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+        }
+        #contact .form-control:focus {
+            border-color: var(--secondary-pink);
+            box-shadow: 0 0 5px var(--secondary-pink);
+        }
+        #contact .btn-primary {
+            background-color: var(--secondary-pink);
+            border-color: var(--secondary-pink);
+            font-weight: 600;
+        }
+        #contact .btn-primary:hover {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        /* Modal Cart */
+        .modal-header {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        .modal-footer {
+            background-color: var(--light-pink);
+        }
+
+        /* Footer (jika ingin) */
+        footer {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!">Minnie's Store</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#contact">Contact</a></li>
+                        <li class="nav-item dropdown">
+                            </ul>
+                <form class="d-flex">
+                    <button
+                        class="btn btn-outline-dark"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#cartModal"
+                    >
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart-count">0</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+        <!-- Header-->
+        <header id=home class="bg-primary text-white py-5 text-center">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Lookin’ like a Comeback Stage with Minnie’s!</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Selamat datang di Minnie's Store, tempatnya para K-pop lovers tampil beda dan penuh gaya!Kami menghadirkan berbagai aksesoris lucu, unik, dan stylish yang terinspirasi dari dunia K-pop.</p>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/jhosusu.jpg" alt="Beads Bracelet" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Beads Bracelet</h5>
+                                    <!-- Product price-->
+                                    IDR15.00 - IDR25.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/download.jpg" alt="Coins Pouch" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Coins Pouch</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">IDR20.00</span>
+                                    IDR18.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/🍃.jpg" alt="Sticker Pack" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Sticker Pack</h5>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">IDR20.00</span>
+                                    IDR15.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/keychain wonwoo.jpg" alt="Bag Charm" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Bag Charm</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    IDR25.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/download (2).jpg" alt="Pins" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Pins</h5>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">IDR30.00</span>
+                                    IDR5.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/going carat seventeen acrylic photocard holder kpop binder photocard.jpg" alt="Photocard Holder" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Acrylic Photocard Holder</h5>
+                                    <!-- Product price-->
+                                    IDR20.00 - IDR30.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/Gemini_Generated_Image_furdc2furdc2furd.png" alt="crochet keychain" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Crochet Keychain</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    <span class="text-muted text-decoration-line-through">IDR20.00</span>
+                                    IDR18.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="assets/ex product/download (1).jpg" alt="Clear Wallet" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Clear Wallet</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                    </div>
+                                    <!-- Product price-->
+                                    IDR20.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+    <section id="about" class="bg-light py-5 text-center">
+        <div class="container">
+            <h2 class="mb-4">About Us</h2>
+            <p>Minnies Store hadir sebagai surga belanja merchandise K-Pop! Dari accessories lucu sampai koleksi eksklusif, semua ada di sini dengan kualitas terbaik dan harga yang ramah di kantong \^0^/</p>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div
+        class="modal fade"
+        id="cartModal"
+        tabindex="-1"
+        aria-labelledby="cartModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-3 text-end">
+    <button class="btn btn-success" onclick="checkout()">Checkout</button>
+</div>
+
+                    <ul class="list-group" id="cart-items"></ul>
+                    <div class="text-end mt-3">
+                        <h5>
+                            Total: $<span id="cart-total">0.00</span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+    let cart = [];
+
+    // Load cart dari localStorage saat halaman dibuka
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+            cart = JSON.parse(savedCart);
+            updateCartDisplay();
+        }
+
+        const buttons = document.querySelectorAll(".btn-outline-dark");
+        buttons.forEach(button => {
+            button.addEventListener("click", e => {
+                const card = e.target.closest(".card");
+                if (!card) return;
+
+                const name = card.querySelector("h5").textContent.trim();
+                let priceText = card.querySelector(".card-body").textContent;
+                let match = priceText.match(/IDR(\d+(?:\.\d+)?)/);
+
+                if (match) {
+                    const price = parseFloat(match[1]);
+                    addToCart(name, price);
+                }
+            });
+        });
+    });
+
+    function addToCart(name, price) {
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+        saveCart();
+        updateCartDisplay();
+    }
+
+    function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        saveCart();
+        updateCartDisplay();
+    }
+
+    function clearCart() {
+        cart = [];
+        saveCart();
+        updateCartDisplay();
+    }
+
+    function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function updateCartDisplay() {
+        const cartItems = document.getElementById("cart-items");
+        const cartTotal = document.getElementById("cart-total");
+        const cartCount = document.getElementById("cart-count");
+
+        cartItems.innerHTML = "";
+        let total = 0;
+        let count = 0;
+
+        cart.forEach(item => {
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
+                ${item.name} (x${item.quantity})
+                <div>
+                    <span class="me-2">IDR ${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.name}')">Hapus</button>
+                </div>
+            `;
+            cartItems.appendChild(li);
+
+            total += item.price * item.quantity;
+            count += item.quantity;
+        });
+
+        cartTotal.textContent = total.toFixed(2);
+        cartCount.textContent = count;
+    }
+
+    // Simulasi tombol checkout
+    function checkout() {
+        if (cart.length === 0) {
+            alert("Keranjang masih kosong!");
+            return;
+        }
+        alert("Terima kasih sudah berbelanja di Minnie's Store!");
+        clearCart();
+    }
+</script>
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Mencegah reload halaman
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !message) {
+            alert("Semua kolom harus diisi!");
+            return;
+        }
+
+        // Simulasi pengiriman
+        alert("Terima kasih, " + name + "! Pesanmu telah dikirim.");
+
+        // Reset form
+        this.reset();
+    });
+</script>
+    <!-- Section Contact -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center">Contact Us</h2>
+            <form id="contactForm" class="mx-auto" style="max-width: 500px;">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nama</label>
+                    <input type="text" class="form-control" id="name" placeholder="Nama lengkap" required />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="email@example.com" required />
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Pesan</label>
+                    <textarea class="form-control" id="message" rows="4" placeholder="Tulis pesanmu di sini..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Kirim</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Script cart JS (keranjang) -->
+    <script>
+        // ... fungsi cart: addToCart, updateCart, clearCart ...
+    </script>
+
+    <!-- Script form contact -->
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !email || !message) {
+                alert("Semua kolom harus diisi!");
+                return;
+            }
+
+            alert("Terima kasih, " + name + "! Pesanmu telah dikirim.");
+            this.reset();
+        });
+    </script>
+    <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Minnie’s Store</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script>
+</body>
+</html>
